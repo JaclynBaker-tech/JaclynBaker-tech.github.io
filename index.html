@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jaclyn Baker — Project Coordinator</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue: #1a1aff;
+    --blue-dark: #0000cc;
+    --red: #ff2200;
+    --white: #f5f4f0;
+    --black: #0a0a0a;
+    --mono: 'DM Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+    --display: 'Bebas Neue', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--white);
+    color: var(--black);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    cursor: none;
+  }
+
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--blue);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease, background 0.2s;
+    mix-blend-mode: multiply;
+  }
+  .cursor.big { transform: scale(5); background: var(--blue); }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 2.5rem;
+    background: var(--white);
+    border-bottom: 1.5px solid var(--black);
+    mix-blend-mode: normal;
+  }
+
+  nav .logo {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--black);
+  }
+
+  nav .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  nav .nav-links a {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--black);
+    transition: color 0.2s;
+  }
+
+  nav .nav-links a:hover { color: var(--blue); }
+
+  section { padding: 0; }
+
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1.5px solid var(--black);
+    padding-top: 60px;
+  }
+
+  .hero-left {
+    background: var(--blue);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 3rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left::before {
+    content: 'JB';
+    font-family: var(--display);
+    font-size: 40vw;
+    color: rgba(255,255,255,0.06);
+    position: absolute;
+    top: -10%;
+    left: -5%;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .hero-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 1rem;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .hero-name {
+    font-family: var(--display);
+    font-size: clamp(4rem, 8vw, 7rem);
+    color: var(--white);
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+    animation: fadeUp 0.8s 0.1s ease both;
+  }
+
+  .hero-role {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: rgba(255,255,255,0.7);
+    margin-top: 1.5rem;
+    letter-spacing: 0.05em;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+
+  .hero-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 5rem 2.5rem 3rem;
+    border-left: 1.5px solid var(--black);
+  }
+
+  .hero-statement {
+    font-family: var(--sans);
+    font-size: clamp(1.3rem, 2.2vw, 1.7rem);
+    font-weight: 300;
+    line-height: 1.4;
+    color: var(--black);
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+
+  .hero-statement em {
+    font-style: italic;
+    color: var(--blue);
+  }
+
+  .hero-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    animation: fadeUp 0.8s 0.4s ease both;
+  }
+
+  .hero-meta span {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #666;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .hero-meta span::before {
+    content: '';
+    width: 20px;
+    height: 1px;
+    background: #999;
+    display: inline-block;
+  }
+
+  .ticker-wrap {
+    background: var(--blue);
+    border-top: 1.5px solid var(--black);
+    border-bottom: 1.5px solid var(--black);
+    overflow: hidden;
+    padding: 0.8rem 0;
+    white-space: nowrap;
+  }
+
+  .ticker {
+    display: inline-block;
+    animation: ticker 20s linear infinite;
+  }
+
+  .ticker span {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--white);
+    padding: 0 2rem;
+  }
+
+  .ticker span.dot::after {
+    content: ' ✦ ';
+    color: rgba(255,255,255,0.4);
+  }
+
+  .about {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    border-bottom: 1.5px solid var(--black);
+  }
+
+  .about-label {
+    border-right: 1.5px solid var(--black);
+    padding: 3rem 2.5rem;
+    display: flex;
+    align-items: flex-start;
+    padding-top: 3rem;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #999;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+
+  .about-content {
+    padding: 3rem 2.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+
+  .about-text {
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: #333;
+  }
+
+  .about-text p + p { margin-top: 1rem; }
+
+  .about-text strong {
+    font-weight: 500;
+    color: var(--black);
+  }
+
+  .about-facts {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .fact {
+    border-top: 1px solid #ddd;
+    padding: 1rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+  }
+
+  .fact:last-child { border-bottom: 1px solid #ddd; }
+
+  .fact-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #999;
+    white-space: nowrap;
+  }
+
+  .fact-value {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--black);
+    text-align: right;
+  }
+
+  .experience {
+    border-bottom: 1.5px solid var(--black);
+  }
+
+  .exp-header {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    border-bottom: 1.5px solid var(--black);
+  }
+
+  .exp-header-left {
+    border-right: 1.5px solid var(--black);
+    padding: 2rem 2.5rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .exp-header-right {
+    padding: 2rem 2.5rem;
+  }
+
+  .exp-header-right h2 {
+    font-family: var(--display);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    letter-spacing: 0.02em;
+    line-height: 1;
+    color: var(--black);
+  }
+
+  .exp-row {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    border-bottom: 1px solid #e0e0e0;
+    transition: background 0.2s;
+  }
+
+  .exp-row:hover { background: #f0f0ec; }
+
+  .exp-row:last-child { border-bottom: none; }
+
+  .exp-left {
+    border-right: 1.5px solid #e0e0e0;
+    padding: 2rem 2.5rem;
+  }
+
+  .exp-company {
+    font-family: var(--display);
+    font-size: 1.4rem;
+    letter-spacing: 0.03em;
+    color: var(--black);
+    line-height: 1.1;
+  }
+
+  .exp-dates {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #999;
+    margin-top: 0.4rem;
+  }
+
+  .exp-title-tag {
+    display: inline-block;
+    margin-top: 0.8rem;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--blue);
+    border: 1px solid var(--blue);
+    padding: 0.2rem 0.5rem;
+    border-radius: 2px;
+  }
+
+  .exp-right {
+    padding: 2rem 2.5rem;
+  }
+
+  .exp-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .exp-bullets li {
+    font-size: 14px;
+    font-weight: 300;
+    color: #333;
+    line-height: 1.6;
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  .exp-bullets li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: #bbb;
+    font-size: 12px;
+  }
+
+  .skills-section {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    border-bottom: 1.5px solid var(--black);
+  }
+
+  .skills-label {
+    border-right: 1.5px solid var(--black);
+    padding: 3rem 2.5rem;
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .skills-grid {
+    padding: 3rem 2.5rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+
+  .skill-item {
+    border-right: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 1.5rem;
+  }
+
+  .skill-item:nth-child(3n) { border-right: none; }
+  .skill-item:nth-last-child(-n+3) { border-bottom: none; }
+
+  .skill-name {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--black);
+    margin-bottom: 0.3rem;
+  }
+
+  .skill-desc {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    color: #999;
+    line-height: 1.5;
+  }
+
+  .fit-section {
+    background: var(--black);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 50vh;
+  }
+
+  .fit-left {
+    padding: 4rem 2.5rem;
+    border-right: 1.5px solid #333;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .fit-left h2 {
+    font-family: var(--display);
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    color: var(--white);
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+  }
+
+  .fit-left h2 span {
+    color: var(--blue);
+    display: block;
+  }
+
+  .fit-statement {
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.7;
+    margin-top: 2rem;
+  }
+
+  .fit-right {
+    padding: 4rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  .fit-point {
+    border-top: 1px solid #333;
+    padding-top: 1.5rem;
+  }
+
+  .fit-point:first-child { border-top: none; padding-top: 0; }
+
+  .fit-point-num {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--blue);
+    margin-bottom: 0.5rem;
+  }
+
+  .fit-point-text {
+    font-size: 14px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.6;
+  }
+
+  .cta-section {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    border-top: 1.5px solid var(--black);
+  }
+
+  .cta-left {
+    padding: 4rem 2.5rem;
+    border-right: 1.5px solid var(--black);
+  }
+
+  .cta-left h2 {
+    font-family: var(--display);
+    font-size: clamp(3rem, 6vw, 5rem);
+    line-height: 0.95;
+    color: var(--black);
+  }
+
+  .cta-left h2 em {
+    font-style: normal;
+    color: var(--blue);
+  }
+
+  .cta-sub {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #999;
+    margin-top: 1.5rem;
+  }
+
+  .cta-right {
+    padding: 4rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .cta-link {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--white);
+    background: var(--blue);
+    padding: 1rem 1.5rem;
+    text-decoration: none;
+    border: 1.5px solid var(--blue);
+    transition: background 0.2s, color 0.2s;
+    margin-bottom: 1rem;
+  }
+
+  .cta-link:hover {
+    background: var(--black);
+    border-color: var(--black);
+  }
+
+  .cta-link.outline {
+    background: transparent;
+    color: var(--black);
+    border-color: var(--black);
+  }
+
+  .cta-link.outline:hover {
+    background: var(--black);
+    color: var(--white);
+  }
+
+  .footer {
+    background: var(--blue);
+    padding: 1.5rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1.5px solid var(--black);
+  }
+
+  .footer span {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+  }
+
+  .footer strong {
+    color: var(--white);
+    font-weight: 400;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  @media (max-width: 768px) {
+    .hero, .about, .skills-section, .fit-section, .cta-section { grid-template-columns: 1fr; }
+    .about-content { grid-template-columns: 1fr; }
+    .skills-grid { grid-template-columns: 1fr 1fr; }
+    .hero-left::before { font-size: 60vw; }
+    nav .nav-links { display: none; }
+    .exp-header, .exp-row { grid-template-columns: 1fr; }
+    .exp-left { border-right: none; border-bottom: 1px solid #e0e0e0; }
+    .about-label, .skills-label { display: none; }
+    .fit-left, .cta-left { border-right: none; border-bottom: 1.5px solid #333; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<nav>
+  <div class="logo">Jaclyn Baker &nbsp;/&nbsp; Application</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#fit">Why WORKINONIT</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Project Coordinator — Application 2026</div>
+    <div class="hero-name">Jaclyn<br>Baker</div>
+    <div class="hero-role">BCom Entrepreneurship &nbsp;·&nbsp; Perth, WA &nbsp;·&nbsp; Available May 2026</div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-statement">
+      I keep things moving.<br>
+      Timelines, teams, and the <em>details</em> that make the difference between a good release and a great one.
+    </div>
+    <div class="hero-meta">
+      <span>Cross-functional coordination</span>
+      <span>eCommerce &amp; sales operations</span>
+      <span>Vendor communications</span>
+      <span>Reporting &amp; analysis</span>
+      <span>AI-assisted workflows</span>
+    </div>
+  </div>
+</section>
+
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span class="dot">Project Coordination</span>
+    <span class="dot">Timeline Management</span>
+    <span class="dot">eCommerce Strategy</span>
+    <span class="dot">Sales Reporting</span>
+    <span class="dot">Vendor Relations</span>
+    <span class="dot">AI Workflow Tools</span>
+    <span class="dot">Cross-functional Teams</span>
+    <span class="dot">Perth-based</span>
+    <span class="dot">May 2026</span>
+    <span class="dot">Project Coordination</span>
+    <span class="dot">Timeline Management</span>
+    <span class="dot">eCommerce Strategy</span>
+    <span class="dot">Sales Reporting</span>
+    <span class="dot">Vendor Relations</span>
+    <span class="dot">AI Workflow Tools</span>
+    <span class="dot">Cross-functional Teams</span>
+    <span class="dot">Perth-based</span>
+    <span class="dot">May 2026</span>
+  </div>
+</div>
+
+<section class="about" id="about">
+  <div class="about-label">
+    <span class="section-label">About</span>
+  </div>
+  <div class="about-content">
+    <div class="about-text">
+      <p>I'm a Commerce graduate with a background in eCommerce advisory, marketing strategy, and operational coordination across fast-paced, multi-workstream environments.</p>
+      <p>I'm good at holding complex things together — keeping teams aligned, timelines honest, and communication clear without making any of it feel heavy.</p>
+      <p>I've lived across four countries and I approach new environments the same way I approach new roles: with genuine curiosity and a willingness to do the work.</p>
+      <p>I'm not someone who needs convincing about the culture. <strong>I already care about it.</strong></p>
+    </div>
+    <div class="about-facts">
+      <div class="fact">
+        <span class="fact-label">Education</span>
+        <span class="fact-value">BCom Entrepreneurship, UVic 2025</span>
+      </div>
+      <div class="fact">
+        <span class="fact-label">Location</span>
+        <span class="fact-value">Perth, WA — relocating April 2026</span>
+      </div>
+      <div class="fact">
+        <span class="fact-label">Availability</span>
+        <span class="fact-value">May 2026 — immediate start</span>
+      </div>
+      <div class="fact">
+        <span class="fact-label">Languages</span>
+        <span class="fact-value">English (native) · Spanish (intermediate)</span>
+      </div>
+      <div class="fact">
+        <span class="fact-label">Lived in</span>
+        <span class="fact-value">Canada · Japan · Peru · Costa Rica · Australia</span>
+      </div>
+      <div class="fact">
+        <span class="fact-label">Tools</span>
+        <span class="fact-value">Excel · Canva · Claude AI · Adobe (basic)</span>
+      </div>
+      <div class="fact">
+        <span class="fact-label">Action sports</span>
+        <span class="fact-value">Former skater · Current snowboarder</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="experience" id="experience">
+  <div class="exp-header">
+    <div class="exp-header-left">
+      <span class="section-label">Experience</span>
+    </div>
+    <div class="exp-header-right">
+      <h2>What I've Done</h2>
+    </div>
+  </div>
+
+  <div class="exp-row">
+    <div class="exp-left">
+      <div class="exp-company">Get Acquired</div>
+      <div class="exp-dates">2024 · Victoria, BC</div>
+      <div class="exp-title-tag">Lead Marketing Strategist</div>
+    </div>
+    <div class="exp-right">
+      <ul class="exp-bullets">
+        <li>Managed cross-functional project timelines across marketing, design, and sales — tracking key dates and keeping multiple teams aligned through concurrent campaign cycles</li>
+        <li>Facilitated team meetings, prepared action item summaries, and followed up on deliverables across overlapping deadlines</li>
+        <li>Prepared sales performance reporting and trend analysis for senior leadership, translating data into clear commercial recommendations</li>
+        <li>Developed sales and marketing assets from brief through to finished output within tight, production-driven timeframes</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="exp-row">
+    <div class="exp-left">
+      <div class="exp-company">Alacrity Canada</div>
+      <div class="exp-dates">2024–2025 · Remote</div>
+      <div class="exp-title-tag">E-Commerce Advisor</div>
+    </div>
+    <div class="exp-right">
+      <ul class="exp-bullets">
+        <li>Served as liaison between small business clients and government funding programs — writing tailored proposals and managing client relationships simultaneously</li>
+        <li>Managed multiple concurrent client workstreams with competing priorities and real deadlines</li>
+        <li>Produced written communications requiring exceptional accuracy and strict deadline adherence</li>
+        <li>Translated complex information into clear, practical language for diverse audiences</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="exp-row">
+    <div class="exp-left">
+      <div class="exp-company">Whiteworth Chalet</div>
+      <div class="exp-dates">2022–2023 · Revelstoke, BC</div>
+      <div class="exp-title-tag">Assistant Chalet Manager</div>
+    </div>
+    <div class="exp-right">
+      <ul class="exp-bullets">
+        <li>Coordinated operations across concurrent workstreams in a fast-paced hospitality environment — suppliers, scheduling, procurement, and delivery timelines simultaneously</li>
+        <li>Built and maintained strong vendor and supplier relationships, supporting negotiations and ensuring on-time delivery</li>
+        <li>Prepared operational reporting and performance summaries supporting planning and commercial decision-making</li>
+        <li>Achieved 15% increase in booking commissions through improved coordination and proactive stakeholder management</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="exp-row">
+    <div class="exp-left">
+      <div class="exp-company">McLeod &amp; Associates</div>
+      <div class="exp-dates">2021–2022 · Toronto, ON</div>
+      <div class="exp-title-tag">Virtual Assistant to CEO</div>
+    </div>
+    <div class="exp-right">
+      <ul class="exp-bullets">
+        <li>Provided direct coordination support to the CEO — managing schedules, tracking deliverables, preparing reports and maintaining communication across concurrent priorities</li>
+        <li>Maintained accurate records and databases supporting forecasting and business development</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="skills-section">
+  <div class="skills-label">
+    <span class="section-label">Skills</span>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-item">
+      <div class="skill-name">Timeline Management</div>
+      <div class="skill-desc">Tracking key dates across design, production, marketing and release simultaneously</div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-name">Excel</div>
+      <div class="skill-desc">Reporting, forecasting, data analysis and sales performance tracking</div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-name">AI Tools</div>
+      <div class="skill-desc">Claude AI and generative AI for workflow automation, scheduling and reporting — daily use</div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-name">eCommerce</div>
+      <div class="skill-desc">Product strategy, SEO optimisation, website analysis and marketing alignment</div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-name">Vendor Relations</div>
+      <div class="skill-desc">Communication, negotiation support, onboarding and relationship management</div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-name">Reporting &amp; Analysis</div>
+      <div class="skill-desc">Sales performance, trend insights and market analysis for leadership and stakeholders</div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-name">Cross-functional Coordination</div>
+      <div class="skill-desc">Aligning teams across product, sales, marketing and production without losing momentum</div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-name">Written Communications</div>
+      <div class="skill-desc">Proposals, briefs, action items, stakeholder updates — clear and precise under pressure</div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-name">Design Tools</div>
+      <div class="skill-desc">Canva (advanced) · Figma · Notion · Adobe Creative Suite (basic)</div>
+    </div>
+  </div>
+</section>
+
+<section class="fit-section" id="fit">
+  <div class="fit-left">
+    <div>
+      <h2>Why<br><span>WORKIN-<br>ONIT</span></h2>
+      <p class="fit-statement">The experience is relevant. The cultural alignment is authentic. What you've built across Butter Goods, Cash Only, and Lo-Fi is the result of consistent, considered execution over many years — and this is exactly the kind of place I want to contribute to.</p>
+    </div>
+  </div>
+  <div class="fit-right">
+    <div class="fit-point">
+      <div class="fit-point-num">01</div>
+      <div class="fit-point-text">Coordination is where I naturally land — keeping teams connected, timelines honest, and all the moving parts harmonious.</div>
+    </div>
+    <div class="fit-point">
+      <div class="fit-point-num">02</div>
+      <div class="fit-point-text">I integrate AI tools into my daily workflow and I'm always looking for ways to work smarter not harder.</div>
+    </div>
+    <div class="fit-point">
+      <div class="fit-point-num">03</div>
+      <div class="fit-point-text">The connection to this world is real. A former skater, current snowboarder — I understand what these brands represent and why that matters.</div>
+    </div>
+    <div class="fit-point">
+      <div class="fit-point-num">04</div>
+      <div class="fit-point-text">Perth-based, available May 2026, ready immediately.</div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section" id="contact">
+  <div class="cta-left">
+    <h2>Let's<br>Talk <em>About</em><br>The Role.</h2>
+  </div>
+  <div class="cta-right">
+    <div>
+      <a href="mailto:jacpbaker@gmail.com" class="cta-link">jacpbaker@gmail.com</a>
+    </div>
+    <div style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: #999; line-height: 1.8;">
+      Jaclyn Baker<br>
+      Perth, Western Australia<br>
+      Available May 2026<br>
+      BCom Entrepreneurship · UVic 2025
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <span>Jaclyn Baker &nbsp;·&nbsp; Project Coordinator Application &nbsp;·&nbsp; 2026</span>
+  <strong>WORKINONIT</strong>
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX - 6 + 'px';
+    cursor.style.top = e.clientY - 6 + 'px';
+  });
+  document.querySelectorAll('a, button, .exp-row').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('big'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('big'));
+  });
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.style.opacity = 1;
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.exp-row, .skill-item, .fit-point, .fact').forEach(el => {
+    el.style.opacity = 0;
+    el.style.transition = 'opacity 0.5s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
