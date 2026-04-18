@@ -615,15 +615,59 @@
   }
 
   @media (max-width: 768px) {
-    .hero, .about, .skills-section, .fit-section, .cta-section { grid-template-columns: 1fr; }
-    .about-content { grid-template-columns: 1fr; }
-    .skills-grid { grid-template-columns: 1fr 1fr; }
-    .hero-left::before { font-size: 60vw; }
+    body { cursor: auto; }
+    .cursor { display: none; }
+
+    nav { padding: 1rem 1.25rem; }
     nav .nav-links { display: none; }
-    .exp-header, .exp-row { grid-template-columns: 1fr; }
-    .exp-left { border-right: none; border-bottom: 1px solid #e0e0e0; }
-    .about-label, .skills-label { display: none; }
-    .fit-left, .cta-left { border-right: none; border-bottom: 1.5px solid #333; }
+
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 6rem 1.25rem 2.5rem; min-height: 55vw; }
+    .hero-left::before { font-size: 65vw; }
+    .hero-name { font-size: clamp(3.5rem, 14vw, 5rem); }
+    .hero-right { padding: 2rem 1.25rem; border-left: none; border-top: 1.5px solid var(--black); }
+    .hero-statement { font-size: 1.15rem; }
+    .hero-meta { gap: 0.4rem; }
+
+    .about { grid-template-columns: 1fr; }
+    .about-label { display: none; }
+    .about-content { grid-template-columns: 1fr; gap: 1.5rem; padding: 2rem 1.25rem; }
+
+    .exp-header { grid-template-columns: 1fr; }
+    .exp-header-left { display: none; }
+    .exp-header-right { padding: 1.5rem 1.25rem; }
+    .exp-row { grid-template-columns: 1fr; }
+    .exp-left { border-right: none; border-bottom: 1px solid #e0e0e0; padding: 1.25rem; }
+    .exp-right { padding: 1.25rem; }
+
+    .skills-section { grid-template-columns: 1fr; }
+    .skills-label { display: none; }
+    .skills-grid { grid-template-columns: 1fr; padding: 1.5rem 1.25rem; }
+    .skill-item { border-right: none !important; padding: 1rem 0; }
+    .skill-item:nth-last-child(-n+3) { border-bottom: 1px solid #e0e0e0 !important; }
+    .skill-item:last-child { border-bottom: none !important; }
+
+    .fit-section { grid-template-columns: 1fr; min-height: auto; }
+    .fit-left { border-right: none; border-bottom: 1.5px solid #333; padding: 2.5rem 1.25rem; }
+    .fit-left h2 { font-size: clamp(3rem, 12vw, 4.5rem); }
+    .fit-right { padding: 2rem 1.25rem; gap: 1.5rem; }
+
+    .cta-section { grid-template-columns: 1fr; }
+    .cta-left { border-right: none; border-bottom: 1.5px solid var(--black); padding: 2.5rem 1.25rem; }
+    .cta-left h2 { font-size: clamp(2.5rem, 10vw, 4rem); }
+    .cta-right { padding: 2rem 1.25rem; }
+    .cta-link { display: block; text-align: center; }
+
+    .footer { padding: 1rem 1.25rem; flex-direction: column; gap: 0.5rem; align-items: flex-start; }
+
+    .ticker-wrap { padding: 0.6rem 0; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-name { font-size: 3.2rem; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .fact { flex-direction: column; gap: 0.2rem; }
+    .fact-value { text-align: left; }
   }
 </style>
 </head>
@@ -747,7 +791,7 @@
     </div>
     <div class="exp-right">
       <ul class="exp-bullets">
-        <li>Managed cross-functional project timelines across marketing, design, and sales — tracking key dates and keeping multiple teams aligned through concurrent campaign cycles</li>
+        <li>Managed cross-functional project timelines across marketing, design, and sales; tracking key dates and keeping multiple teams aligned through concurrent campaign cycles</li>
         <li>Facilitated team meetings, prepared action item summaries, and followed up on deliverables across overlapping deadlines</li>
         <li>Prepared sales performance reporting and trend analysis for senior leadership, translating data into clear commercial recommendations</li>
         <li>Developed sales and marketing assets from brief through to finished output within tight, production-driven timeframes</li>
@@ -763,7 +807,7 @@
     </div>
     <div class="exp-right">
       <ul class="exp-bullets">
-        <li>Served as liaison between small business clients and government funding programs — writing tailored proposals and managing client relationships simultaneously</li>
+        <li>Served as liaison between small business clients and government funding programs; writing tailored proposals and managing client relationships simultaneously</li>
         <li>Managed multiple concurrent client workstreams with competing priorities and real deadlines</li>
         <li>Produced written communications requiring exceptional accuracy and strict deadline adherence</li>
         <li>Translated complex information into clear, practical language for diverse audiences</li>
@@ -779,7 +823,7 @@
     </div>
     <div class="exp-right">
       <ul class="exp-bullets">
-        <li>Coordinated operations across concurrent workstreams in a fast-paced hospitality environment — suppliers, scheduling, procurement, and delivery timelines simultaneously</li>
+        <li>Coordinated operations across concurrent workstreams in a fast-paced hospitality environment: suppliers, scheduling, procurement, and delivery timelines simultaneously</li>
         <li>Built and maintained strong vendor and supplier relationships, supporting negotiations and ensuring on-time delivery</li>
         <li>Prepared operational reporting and performance summaries supporting planning and commercial decision-making</li>
         <li>Achieved 15% increase in booking commissions through improved coordination and proactive stakeholder management</li>
@@ -795,7 +839,7 @@
     </div>
     <div class="exp-right">
       <ul class="exp-bullets">
-        <li>Provided direct coordination support to the CEO — managing schedules, tracking deliverables, preparing reports and maintaining communication across concurrent priorities</li>
+        <li>Provided direct coordination support to the CEO; managing schedules, tracking deliverables, preparing reports and maintaining communication across concurrent priorities</li>
         <li>Maintained accurate records and databases supporting forecasting and business development</li>
       </ul>
     </div>
@@ -850,21 +894,20 @@
   <div class="fit-left">
     <div>
       <h2>Why<br><span>WORKIN-<br>ONIT</span></h2>
-      <p class="fit-statement">The experience is relevant. The cultural alignment is authentic. What you've built across Butter Goods, Cash Only, and Lo-Fi is the result of consistent, considered execution over many years — and this is exactly the kind of place I want to contribute to.</p>
     </div>
   </div>
   <div class="fit-right">
     <div class="fit-point">
       <div class="fit-point-num">01</div>
-      <div class="fit-point-text">Coordination is where I naturally land — keeping teams connected, timelines honest, and all the moving parts harmonious.</div>
+      <div class="fit-point-text">Coordination is where I naturally land; keeping teams connected, timelines honest, and all the moving parts harmonious.</div>
     </div>
     <div class="fit-point">
       <div class="fit-point-num">02</div>
-      <div class="fit-point-text">I integrate AI tools into my daily workflow and I'm always looking for ways to work smarter not harder.</div>
+      <div class="fit-point-text">I integrate AI tools into my daily workflow and I'm always looking for ways to work smarter, not harder.</div>
     </div>
     <div class="fit-point">
       <div class="fit-point-num">03</div>
-      <div class="fit-point-text">The connection to this world is real. A former skater, current snowboarder — I understand what these brands represent and why that matters.</div>
+      <div class="fit-point-text">The connection to this industry is real. A former skater and current snowboarder, I understand what these brands represent and why that matters.</div>
     </div>
     <div class="fit-point">
       <div class="fit-point-num">04</div>
